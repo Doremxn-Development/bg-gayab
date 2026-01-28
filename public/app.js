@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const upload = document.getElementById("upload");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -64,7 +63,7 @@ upload.addEventListener("change", async (e) => {
   ctx.putImageData(imageData, 0, 0);
   statusText.innerText = "Done ✔ Right-click → Save image";
 });
-=======
+
 const upload = document.getElementById("upload");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -130,4 +129,3 @@ upload.addEventListener("change", async (e) => {
   ctx.putImageData(imageData, 0, 0);
   statusText.innerText = "Done ✔ Right-click → Save image";
 });
->>>>>>> 9f748b0 (Add u2net model using Git LFS)
