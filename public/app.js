@@ -3,26 +3,20 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const statusText = document.getElementById("status");
 
-// 🔥 U2Net model hosted on GitHub Releases (NO Git LFS)
-const MODEL_PATH =
-  "https://github.com/Doremxn-Development/bg-gayab/releases/download/fgh/u2net.onnx";
-
+// IMPORTANT: vercel path (no /public)
+const MODEL_PATH = "/model/u2net.onnx";
 const SIZE = 320;
+
 let session;
 
 // Load U2Net model
 (async () => {
-  try {
-    statusText.innerText = "Loading AI model...";
-    session = await ort.InferenceSession.create(MODEL_PATH);
-    statusText.innerText = "Model loaded ✔";
+  statusText.innerText = "Loading AI model...";
+  session = await ort.InferenceSession.create(MODEL_PATH);
+  statusText.innerText = "Model loaded ✔";
 
-    console.log("Inputs:", session.inputNames);
-    console.log("Outputs:", session.outputNames);
-  } catch (err) {
-    console.error(err);
-    statusText.innerText = "❌ Failed to load model";
-  }
+  console.log("Inputs:", session.inputNames);
+  console.log("Outputs:", session.outputNames);
 })();
 
 upload.addEventListener("change", async (e) => {
@@ -41,7 +35,7 @@ upload.addEventListener("change", async (e) => {
 
   const imageData = ctx.getImageData(0, 0, SIZE, SIZE);
 
-  // Preprocess (RGB → CHW)
+  // Preprocess (RGB, CHW)
   const input = new Float32Array(1 * 3 * SIZE * SIZE);
   let r = 0;
   let g = SIZE * SIZE;
@@ -57,7 +51,7 @@ upload.addEventListener("change", async (e) => {
 
   const tensor = new ort.Tensor("float32", input, [1, 3, SIZE, SIZE]);
 
-  // Correct dynamic input name
+  // Correct input name (dynamic)
   const feeds = {};
   feeds[session.inputNames[0]] = tensor;
 
